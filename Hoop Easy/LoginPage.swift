@@ -9,7 +9,7 @@ import SwiftUI
 
 struct LoginPage: View {
     @ObservedObject private var viewModel = ViewModel()
-    @State private var username: String = ""
+    @State private var email: String = ""
     @State private var password: String = ""
     @State private var navigateToHomepage = false
     @Environment(\.colorScheme) var colorScheme
@@ -25,8 +25,8 @@ struct LoginPage: View {
                 Spacer()
                 
                 TextField("",
-                    text: $username,
-                    prompt: Text("Username").foregroundStyle(.gray)
+                    text: $email,
+                    prompt: Text("email").foregroundStyle(.gray)
                 ).withInputStyling()
                 
                 HStack {
@@ -37,7 +37,9 @@ struct LoginPage: View {
                 }
                 
                 Button {
-                    viewModel.handleButtonClick(username: username, password: password)
+                    Task {
+                        await viewModel.handleButtonClick(email: email, password: password)
+                    }
                 } label: {
                     Text("Login")
                         .frame(maxWidth: .infinity)
@@ -45,6 +47,7 @@ struct LoginPage: View {
                         .padding()
                 }
                 .withButtonStyling()
+
                 
                 Text(viewModel.loginAttempts > 0 ? "Failed to login" : "")
                 
@@ -57,7 +60,7 @@ struct LoginPage: View {
             }
             
             .navigationDestination(isPresented: $navigateToHomepage) {
-                Homepage()
+                Homepage(viewModel: self.viewModel)
             }
         }
     }
