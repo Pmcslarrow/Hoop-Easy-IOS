@@ -26,7 +26,7 @@ struct LoginPage: View {
                 
                 TextField("",
                     text: $email,
-                    prompt: Text("email").foregroundStyle(.gray)
+                    prompt: Text("Email").foregroundStyle(.gray)
                 ).withInputStyling()
                 
                 HStack {
@@ -45,10 +45,8 @@ struct LoginPage: View {
                         .frame(maxWidth: .infinity)
                         .foregroundColor(.white)
                         .padding()
-                }
-                .withButtonStyling()
+                }.withButtonStyling()
 
-                
                 Text(viewModel.loginAttempts > 0 ? "Failed to login" : "")
                 
                 Spacer()
@@ -60,7 +58,8 @@ struct LoginPage: View {
             }
             
             .navigationDestination(isPresented: $navigateToHomepage) {
-                Homepage(viewModel: self.viewModel)
+                NavigationBar(viewModel: self.viewModel)
+                    .toolbar(.hidden)
             }
         }
     }

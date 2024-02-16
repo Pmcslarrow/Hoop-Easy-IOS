@@ -22,4 +22,26 @@ class Model {
         let profilePic: String
     }
     
+    struct Game: Decodable {
+        let gameID: Int
+        let userID: Int
+        let address: String
+        let longitude: String
+        let latitude: String
+        let dateOfGameInUTC: String
+        let distance: String?
+        let gameType: Int
+        let playerCreatedID: String
+        let timeOfGame: String
+        let userTimeZone: String
+        let status: String
+        let teammates: [String: String]
+        let captains: [String: String]?
+        let scores: [String: String]?
+        let team1: [String: String]?
+        let team2: [String: String]?
+        let teamOneApproval: Int?
+        let teamTwoApproval: Int?
+    }
+    
 }

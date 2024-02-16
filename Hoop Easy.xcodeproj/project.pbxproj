@@ -24,6 +24,11 @@
 		3F53EC592B7C2CC1004DDD54 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 3F53EC582B7C2CC1004DDD54 /* FirebaseAuth */; };
 		3F53EC5C2B7C635F004DDD54 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 3F53EC5B2B7C635F004DDD54 /* Alamofire */; };
 		3F53EC5E2B7C671B004DDD54 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3F53EC5D2B7C671B004DDD54 /* GoogleService-Info.plist */; };
+		3F53EC602B7D47DB004DDD54 /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F53EC5F2B7D47DB004DDD54 /* Profile.swift */; };
+		3F53EC622B7D47E5004DDD54 /* Map.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F53EC612B7D47E5004DDD54 /* Map.swift */; };
+		3F53EC642B7D47EF004DDD54 /* Rankings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F53EC632B7D47EF004DDD54 /* Rankings.swift */; };
+		3F53EC662B7D7EA3004DDD54 /* backgrounds in Resources */ = {isa = PBXBuildFile; fileRef = 3F53EC652B7D7EA3004DDD54 /* backgrounds */; };
+		3F53EC682B7F412E004DDD54 /* GameDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F53EC672B7F412E004DDD54 /* GameDetail.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +43,11 @@
 		3F53EC512B7C16DD004DDD54 /* Homepage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Homepage.swift; sourceTree = "<group>"; };
 		3F53EC532B7C227D004DDD54 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		3F53EC5D2B7C671B004DDD54 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
+		3F53EC5F2B7D47DB004DDD54 /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
+		3F53EC612B7D47E5004DDD54 /* Map.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Map.swift; sourceTree = "<group>"; };
+		3F53EC632B7D47EF004DDD54 /* Rankings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rankings.swift; sourceTree = "<group>"; };
+		3F53EC652B7D7EA3004DDD54 /* backgrounds */ = {isa = PBXFileReference; lastKnownFileType = folder; path = backgrounds; sourceTree = "<group>"; };
+		3F53EC672B7F412E004DDD54 /* GameDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameDetail.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,15 +89,18 @@
 			isa = PBXGroup;
 			children = (
 				3F53EC5D2B7C671B004DDD54 /* GoogleService-Info.plist */,
+				3F53EC342B7C01A4004DDD54 /* Preview Content */,
 				3F53EC2E2B7C01A3004DDD54 /* Hoop_EasyApp.swift */,
 				3F53EC4D2B7C0A6C004DDD54 /* Model.swift */,
 				3F53EC4B2B7C0A62004DDD54 /* ViewModel.swift */,
 				3F53EC302B7C01A3004DDD54 /* ContentView.swift */,
-				3F53EC322B7C01A4004DDD54 /* Assets.xcassets */,
-				3F53EC342B7C01A4004DDD54 /* Preview Content */,
 				3F53EC4F2B7C166E004DDD54 /* LoginPage.swift */,
 				3F53EC512B7C16DD004DDD54 /* Homepage.swift */,
+				3F53EC612B7D47E5004DDD54 /* Map.swift */,
+				3F53EC632B7D47EF004DDD54 /* Rankings.swift */,
+				3F53EC5F2B7D47DB004DDD54 /* Profile.swift */,
 				3F53EC532B7C227D004DDD54 /* Extensions.swift */,
+				3F53EC672B7F412E004DDD54 /* GameDetail.swift */,
 			);
 			path = "Hoop Easy";
 			sourceTree = "<group>";
@@ -95,6 +108,8 @@
 		3F53EC342B7C01A4004DDD54 /* Preview Content */ = {
 			isa = PBXGroup;
 			children = (
+				3F53EC652B7D7EA3004DDD54 /* backgrounds */,
+				3F53EC322B7C01A4004DDD54 /* Assets.xcassets */,
 				3F53EC352B7C01A4004DDD54 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
@@ -180,6 +195,7 @@
 			files = (
 				3F53EC362B7C01A4004DDD54 /* Preview Assets.xcassets in Resources */,
 				3F53EC332B7C01A4004DDD54 /* Assets.xcassets in Resources */,
+				3F53EC662B7D7EA3004DDD54 /* backgrounds in Resources */,
 				3F53EC5E2B7C671B004DDD54 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -192,11 +208,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				3F53EC312B7C01A3004DDD54 /* ContentView.swift in Sources */,
+				3F53EC602B7D47DB004DDD54 /* Profile.swift in Sources */,
 				3F53EC4C2B7C0A62004DDD54 /* ViewModel.swift in Sources */,
 				3F53EC2F2B7C01A3004DDD54 /* Hoop_EasyApp.swift in Sources */,
+				3F53EC642B7D47EF004DDD54 /* Rankings.swift in Sources */,
 				3F53EC522B7C16DD004DDD54 /* Homepage.swift in Sources */,
 				3F53EC502B7C166E004DDD54 /* LoginPage.swift in Sources */,
 				3F53EC4E2B7C0A6C004DDD54 /* Model.swift in Sources */,
+				3F53EC622B7D47E5004DDD54 /* Map.swift in Sources */,
+				3F53EC682B7F412E004DDD54 /* GameDetail.swift in Sources */,
 				3F53EC542B7C227D004DDD54 /* Extensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
