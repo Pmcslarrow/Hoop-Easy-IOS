@@ -58,7 +58,7 @@ struct LoginPage: View {
             }
             
             .navigationDestination(isPresented: $navigateToHomepage) {
-                NavigationBar(viewModel: self.viewModel)
+                Homepage(viewModel: self.viewModel)
                     .toolbar(.hidden)
             }
         }

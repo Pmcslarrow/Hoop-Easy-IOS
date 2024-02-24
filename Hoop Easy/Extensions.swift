@@ -31,18 +31,6 @@ struct Extensions: View {
                     .padding()
             }
             .withButtonStyling()
-            
-            Spacer()
-            
-            ScrollView(.horizontal) {
-                HStack(spacing: 20) {
-                    GameCard(viewModel: ViewModel())
-                }
-                .padding(.horizontal, 20)
-                .padding(.vertical, 10)
-            }
-
-            Spacer()
         }.backgroundImage()
     }
 }

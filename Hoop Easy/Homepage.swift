@@ -6,159 +6,43 @@
 //
 
 import SwiftUI
+import MapKit
+
+extension CLLocationCoordinate2D {
+    static let myrtle = CLLocationCoordinate2D(latitude: 42.35, longitude: -71.06)
+}
 
 struct Homepage: View {
+    @State private var position: MapCameraPosition = .automatic
+    @State private var searchResults: [MKMapItem] = []
+    @State private var selectedResult: MKMapItem? // Renamed for clarity
+    @State private var availableGames: [Model.Game] = []
+    @State private var gameMarkers: [MKMapItem] = []
+    
     let viewModel: ViewModel
     
     init(viewModel: ViewModel) {
         self.viewModel = viewModel
     }
     
-    var ProfileButton: some View {
-        NavigationLink(destination: Profile(viewModel: self.viewModel)) {
-            ZStack {
-                Circle().opacity(0.1)
-                    .foregroundColor(Color.black.opacity(0.5))
-                Image(systemName: "person.fill")
-                    .font(.system(size: 30))
-                    .foregroundColor(Color.black)
-            }
-        }
-    }
-
     var body: some View {
-        NavigationView {
-            ZStack(alignment: .bottomTrailing) {
-                VStack {
-                    HStack {
-                        Button {
-                            
-                        } label: {
-                            Text("New Game")
-                                .frame(maxWidth: 100)
-                                .foregroundColor(.white)
-                                .padding()
-                        }.withButtonStyling()
-                        Spacer()
-                        ProfileButton.frame(width: 50, height: 50).padding()
-                    }
-                    Divider()
-                    ScrollView(.horizontal) {
-                        HStack(spacing: 5) {
-                            GameCard(viewModel: self.viewModel)
-                            GameCard(viewModel: self.viewModel)
-                            GameCard(viewModel: self.viewModel)
-                            GameCard(viewModel: self.viewModel)
-                        }
-                        .padding(.horizontal, 20)
-                        .padding(.vertical, 10)
-                    }
-                    
-                    PreviousGames(viewModel: self.viewModel)
+        Map(position: $position, selection: $selectedResult) {
+            ForEach(self.availableGames, id: \.self) { game in
+                let latitude = Double(game.latitude)
+                let longitude = Double(game.longitude)
+                if let latitude = latitude, let longitude = longitude {
+                    Marker(item: MKMapItem(placemark: MKPlacemark(coordinate: CLLocationCoordinate2D(latitude: latitude, longitude: longitude))))
                 }
             }
         }
-    }
-}
-
-
-
-struct GameCard: View {
-    let viewModel: ViewModel
-    //let cardDetails: Model.Game
-    @State private var isAnimating = false
-    
-    var OpponentImage: some View {
-        ZStack {
-            Circle()
-                .withScrollTransition()
-            Image(systemName: "person.fill")
-                .withScrollTransition()
-                .font(.system(size: 90))
-        }
-    }
-    
-    var PreviewStats: some View {
-        HStack (spacing: 70){
-            Text("65 Ovr").withScrollTransition()
-            Label {
-                Text("0.61 Mi").withScrollTransition()
-            } icon: {
-                Image(systemName: "location.fill").withScrollTransition()
-            }
-        }.padding(.all)
-    }
-
-    
-    var body: some View {
-        NavigationLink(destination: GameDetail(viewModel: self.viewModel)) {
-            ZStack {
-                Rectangle()
-                    .withCardStyling(width: 275, height: 290)
-                    .scaleEffect(isAnimating ? 1.0 : 0.0)
-                    .opacity(isAnimating ? 1.0 : 0.0)
-                VStack(spacing: 20){
-                    OpponentImage
-                    PreviewStats
-                }
-            }.onAppear {
-                withAnimation(
-                    .spring(response: 0.5, dampingFraction: 0.7, blendDuration: 0.5)) {
-                    self.isAnimating = true
+        .mapStyle(.standard(elevation: .realistic))
+        .onAppear {
+            self.viewModel.getAvailableGames() { value in
+                if let games = value {
+                    self.availableGames = games
                 }
             }
-            .onTapGesture {
-                print(self.viewModel.availableGames ?? "Nothing in avail games")
-            }
-        }.buttonStyle(PlainButtonStyle())
-    }
-}
-
-struct NavigationBar: View {
-    let viewModel: ViewModel
-    
-    var body: some View {
-        TabView {
-            Homepage(viewModel: self.viewModel)
-                .tabItem {
-                    Label("Games", systemImage: "person")
-                }
-            Map(viewModel: self.viewModel)
-                .tabItem {
-                    Label("Map", systemImage: "map")
-                }
-            Rankings(viewModel: self.viewModel)
-                .tabItem {
-                    Label("Rankings", systemImage: "crown")
-                }
         }
-    }
-}
-
-struct PreviousGames: View {
-    let viewModel: ViewModel
-    
-    var body: some View {
-        NavigationView {
-            VStack {
-                List {
-                    NavigationLink("Feb 22, 2024", destination: GameDetail(viewModel: self.viewModel))
-                    NavigationLink("Feb 22, 2024", destination: GameDetail(viewModel: self.viewModel))
-                    NavigationLink("Feb 22, 2024", destination: GameDetail(viewModel: self.viewModel))
-                    NavigationLink("Feb 22, 2024", destination: GameDetail(viewModel: self.viewModel))
-                    NavigationLink("Feb 22, 2024", destination: GameDetail(viewModel: self.viewModel))
-                }
-            }.navigationTitle("Previous Games")
-        }
-    }
-}
-
-
-struct CreateGameButton: View {
-    var body: some View {
-        Button("Create") {
-            
-        }.position(x: 10, y: 10)
     }
 }
 

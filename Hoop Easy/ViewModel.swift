@@ -54,6 +54,17 @@ class ViewModel: ObservableObject {
             }
         }
     }
+    
+    func getAvailableGames(completion: @escaping ([Model.Game]?) -> Void) {
+        callAvailableGames(endpoint: "api/games", params: ["": ""]) { result in
+            switch result {
+            case .success(let games):
+                completion(games)
+            case .failure(let error):
+                completion(nil)
+            }
+        }
+    }
    
     func callCurrentUser(endpoint: String, params: [String: String], completion: @escaping (Result<Model.User?, Error>) -> Void) {
         let api = "https://hoop-easy-production.up.railway.app/" + endpoint
