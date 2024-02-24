@@ -23,15 +23,6 @@ class Model {
     }
     
     struct Game: Decodable, Hashable {
-        func hash(into hasher: inout Hasher) {
-           hasher.combine(gameID)
-           hasher.combine(userID)
-        }
-        
-        static func == (lhs: Game, rhs: Game) -> Bool {
-            return lhs.gameID == rhs.gameID && lhs.userID == rhs.userID
-        }
-        
         let gameID: Int
         let userID: Int
         let address: String
@@ -51,6 +42,16 @@ class Model {
         let team2: [String: String]?
         let teamOneApproval: Int?
         let teamTwoApproval: Int?
+        
+        func hash(into hasher: inout Hasher) {
+            hasher.combine(gameID)
+            hasher.combine(userID)
+        }
+        
+        static func == (lhs: Game, rhs: Game) -> Bool {
+            return lhs.gameID == rhs.gameID && lhs.userID == rhs.userID
+        }
     }
+
     
 }

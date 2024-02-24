@@ -3,6 +3,7 @@
 import Foundation
 import FirebaseAuth
 import Alamofire
+import MapKit
 
 class ViewModel: ObservableObject {
     private var model = Model()
@@ -55,16 +56,36 @@ class ViewModel: ObservableObject {
         }
     }
     
-    func getAvailableGames(completion: @escaping ([Model.Game]?) -> Void) {
+    func getAvailableGames(completion: @escaping ([Model.Game]?) -> Void, MapKitGamesEscape: @escaping ([MKMapItem]?) -> Void) {
         callAvailableGames(endpoint: "api/games", params: ["": ""]) { result in
             switch result {
             case .success(let games):
                 completion(games)
+                
+                // Create MKMapItems from game coordinates
+                let MKGames = games?.compactMap { game -> MKMapItem? in
+                    guard let latitude = Double(game.latitude),
+                          let longitude = Double(game.longitude) else {
+                        return nil
+                    }
+                    let coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+                    let placemark = MKPlacemark(coordinate: coordinate)
+                    let mapItem = MKMapItem(placemark: placemark)
+                    mapItem.name = "\(game.gameType)v\(game.gameType) on \(game.dateOfGameInUTC.prefix(10))"
+                    
+                    return mapItem
+                }
+                MapKitGamesEscape(MKGames)
+                
             case .failure(let error):
+                print("Error fetching games: \(error)")
                 completion(nil)
+                MapKitGamesEscape(nil)
             }
         }
     }
+
+
    
     func callCurrentUser(endpoint: String, params: [String: String], completion: @escaping (Result<Model.User?, Error>) -> Void) {
         let api = "https://hoop-easy-production.up.railway.app/" + endpoint

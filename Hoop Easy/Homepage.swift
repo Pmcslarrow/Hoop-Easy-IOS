@@ -15,9 +15,8 @@ extension CLLocationCoordinate2D {
 struct Homepage: View {
     @State private var position: MapCameraPosition = .automatic
     @State private var searchResults: [MKMapItem] = []
-    @State private var selectedResult: MKMapItem? // Renamed for clarity
+    @State private var selectedResult: MKMapItem?
     @State private var availableGames: [Model.Game] = []
-    @State private var gameMarkers: [MKMapItem] = []
     
     let viewModel: ViewModel
     
@@ -27,22 +26,23 @@ struct Homepage: View {
     
     var body: some View {
         Map(position: $position, selection: $selectedResult) {
-            ForEach(self.availableGames, id: \.self) { game in
-                let latitude = Double(game.latitude)
-                let longitude = Double(game.longitude)
-                if let latitude = latitude, let longitude = longitude {
-                    Marker(item: MKMapItem(placemark: MKPlacemark(coordinate: CLLocationCoordinate2D(latitude: latitude, longitude: longitude))))
-                }
+            ForEach(self.searchResults, id: \.self) { game in
+                Marker(item: game)
             }
         }
         .mapStyle(.standard(elevation: .realistic))
         .onAppear {
-            self.viewModel.getAvailableGames() { value in
-                if let games = value {
+            self.viewModel.getAvailableGames(completion: { games in
+                if let games = games {
                     self.availableGames = games
                 }
-            }
+            }, MapKitGamesEscape: { mapItems in
+                if let mapItems = mapItems {
+                    self.searchResults = mapItems
+                }
+            })
         }
+
     }
 }
 
