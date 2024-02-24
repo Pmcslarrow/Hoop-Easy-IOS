@@ -14,77 +14,92 @@ struct Homepage: View {
         self.viewModel = viewModel
     }
     
+    var ProfileButton: some View {
+        NavigationLink(destination: Profile(viewModel: self.viewModel)) {
+            ZStack {
+                Circle().opacity(0.1)
+                    .foregroundColor(Color.black.opacity(0.5))
+                Image(systemName: "person.fill")
+                    .font(.system(size: 30))
+                    .foregroundColor(Color.black)
+            }
+        }
+    }
+
     var body: some View {
         NavigationView {
-            VStack {
-                ScrollView(.horizontal) {
-                    HStack(spacing: 30) {
-                        
-                        GameCard(viewModel: self.viewModel)
-                        GameCard(viewModel: self.viewModel)
-                        GameCard(viewModel: self.viewModel)
+            ZStack(alignment: .bottomTrailing) {
+                VStack {
+                    HStack {
+                        Button {
+                            
+                        } label: {
+                            Text("New Game")
+                                .frame(maxWidth: 100)
+                                .foregroundColor(.white)
+                                .padding()
+                        }.withButtonStyling()
+                        Spacer()
+                        ProfileButton.frame(width: 50, height: 50).padding()
                     }
-                    .padding(.horizontal, 20)
-                    .padding(.vertical, 10)
+                    Divider()
+                    ScrollView(.horizontal) {
+                        HStack(spacing: 5) {
+                            GameCard(viewModel: self.viewModel)
+                            GameCard(viewModel: self.viewModel)
+                            GameCard(viewModel: self.viewModel)
+                            GameCard(viewModel: self.viewModel)
+                        }
+                        .padding(.horizontal, 20)
+                        .padding(.vertical, 10)
+                    }
+                    
+                    PreviousGames(viewModel: self.viewModel)
                 }
-                Spacer()
-                
-                GameSwiper()
             }
-            .navigationBarTitle("Confirmed Games")
         }
     }
 }
 
-struct NavigationBar: View {
-    let viewModel: ViewModel
-    
-    var body: some View {
-        TabView {
-            Homepage(viewModel: self.viewModel)
-                .tabItem {
-                    Label("Games", systemImage: "person")
-                }
-                
-            Map(viewModel: self.viewModel)
-                .tabItem {
-                    Label("Map", systemImage: "map")
-                }
-            Rankings(viewModel: self.viewModel)
-                .tabItem {
-                    Label("Rankings", systemImage: "crown")
-                }
-            Profile(viewModel: self.viewModel)
-                .tabItem {
-                    Label("Profile", systemImage: "person")
-                }
-        }
-    }
-}
+
 
 struct GameCard: View {
     let viewModel: ViewModel
     //let cardDetails: Model.Game
     @State private var isAnimating = false
+    
+    var OpponentImage: some View {
+        ZStack {
+            Circle()
+                .withScrollTransition()
+            Image(systemName: "person.fill")
+                .withScrollTransition()
+                .font(.system(size: 90))
+        }
+    }
+    
+    var PreviewStats: some View {
+        HStack (spacing: 70){
+            Text("65 Ovr").withScrollTransition()
+            Label {
+                Text("0.61 Mi").withScrollTransition()
+            } icon: {
+                Image(systemName: "location.fill").withScrollTransition()
+            }
+        }.padding(.all)
+    }
 
     
     var body: some View {
         NavigationLink(destination: GameDetail(viewModel: self.viewModel)) {
             ZStack {
                 Rectangle()
-                    .withCardStyling()
+                    .withCardStyling(width: 275, height: 290)
                     .scaleEffect(isAnimating ? 1.0 : 0.0)
                     .opacity(isAnimating ? 1.0 : 0.0)
-                VStack {
-                    ZStack {
-                        Circle().withScrollTransition()
-                        Image(systemName: "person.fill").withScrollTransition()
-                    }
-                    
-                    HStack (spacing: 20){
-                        Text("0.61 Miles").withScrollTransition()
-                        Text("65 Ovr").withScrollTransition()
-                    }.padding(.all)
+                VStack(spacing: 20){
+                    OpponentImage
+                    PreviewStats
                 }
             }.onAppear {
                 withAnimation(
@@ -99,15 +114,51 @@ struct GameCard: View {
     }
 }
 
-
-struct GameSwiper: View {
+struct NavigationBar: View {
+    let viewModel: ViewModel
+    
     var body: some View {
-        NavigationStack {
-            ZStack {
-                Text("Tinder Swipe Left and Right with Gestures!")
-            }
-            .navigationTitle("Find Games")
+        TabView {
+            Homepage(viewModel: self.viewModel)
+                .tabItem {
+                    Label("Games", systemImage: "person")
+                }
+            Map(viewModel: self.viewModel)
+                .tabItem {
+                    Label("Map", systemImage: "map")
+                }
+            Rankings(viewModel: self.viewModel)
+                .tabItem {
+                    Label("Rankings", systemImage: "crown")
+                }
         }
+    }
+}
+
+struct PreviousGames: View {
+    let viewModel: ViewModel
+    
+    var body: some View {
+        NavigationView {
+            VStack {
+                List {
+                    NavigationLink("Feb 22, 2024", destination: GameDetail(viewModel: self.viewModel))
+                    NavigationLink("Feb 22, 2024", destination: GameDetail(viewModel: self.viewModel))
+                    NavigationLink("Feb 22, 2024", destination: GameDetail(viewModel: self.viewModel))
+                    NavigationLink("Feb 22, 2024", destination: GameDetail(viewModel: self.viewModel))
+                    NavigationLink("Feb 22, 2024", destination: GameDetail(viewModel: self.viewModel))
+                }
+            }.navigationTitle("Previous Games")
+        }
+    }
+}
+
+
+struct CreateGameButton: View {
+    var body: some View {
+        Button("Create") {
+            
+        }.position(x: 10, y: 10)
     }
 }
 

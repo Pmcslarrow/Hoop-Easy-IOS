@@ -36,17 +36,7 @@ struct Extensions: View {
             
             ScrollView(.horizontal) {
                 HStack(spacing: 20) {
-                    
                     GameCard(viewModel: ViewModel())
-                    GameCard(viewModel: ViewModel())
-                    GameCard(viewModel: ViewModel())
-                    GameCard(viewModel: ViewModel())
-                    GameCard(viewModel: ViewModel())
-                    GameCard(viewModel: ViewModel())
-                    GameCard(viewModel: ViewModel())
-                    GameCard(viewModel: ViewModel())
-                    GameCard(viewModel: ViewModel())
-
                 }
                 .padding(.horizontal, 20)
                 .padding(.vertical, 10)
@@ -95,20 +85,21 @@ extension Button {
 }
 
 extension Rectangle {
-    func withCardStyling() -> some View {
+    func withCardStyling(width: CGFloat, height: CGFloat) -> some View {
         self
             .fill(
                 LinearGradient(gradient: Gradient(colors: [Color.white, .colorLightOrange]),
                                startPoint: .topLeading,
                                endPoint: .bottomTrailing)
             )
-            .frame(width: 200, height: 215)
+            .frame(width: width, height: height)
             .clipShape(.buttonBorder)
+            .shadow(radius: 3, x: 5, y: 5)
             .overlay(
                 LinearGradient(gradient: Gradient(colors: [Color.colorLightOrange, Color.white]),
                                startPoint: .topLeading,
                                endPoint: .bottomTrailing)
-                    .frame(width: 200, height: 215)
+                    .frame(width: width, height: height)
                     .clipShape(.buttonBorder)
                     .opacity(0.1) 
             )
@@ -138,7 +129,7 @@ extension Circle {
 extension Text {
     func withScrollTransition() -> some View {
         self
-            .font(.system(size: 16, weight: .bold))
+            .font(.system(size: 18, weight: .bold))
             .scrollTransition(.animated.threshold(.visible(1))) { content, phase in
                 content
                     .opacity(phase.isIdentity ? 0.5 : 0)
@@ -150,7 +141,6 @@ extension Text {
 extension Image {
     func withScrollTransition() -> some View {
         self
-            .font(.system(size: 90))
             .scrollTransition(.animated.threshold(.visible(1))) { content, phase in
                 content
                     .opacity(phase.isIdentity ? 1 : 0.0)

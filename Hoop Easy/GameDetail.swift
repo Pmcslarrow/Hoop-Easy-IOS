@@ -28,6 +28,26 @@ struct GameDetail: View {
 }
 
 
+struct FindGameDetail: View {
+    let viewModel: ViewModel
+    @State var isSheetActive = false
+    
+    init (viewModel: ViewModel) {
+        self.viewModel = viewModel
+    }
+    
+    var body: some View {
+        ZStack {
+            Image("background_2").withBackground() // Insert map ui
+            
+            VStack {
+                Text("FindGameDetail")
+            }
+        }
+    }
+}
+
+
 #Preview {
     GameDetail(viewModel: ViewModel())
 }
