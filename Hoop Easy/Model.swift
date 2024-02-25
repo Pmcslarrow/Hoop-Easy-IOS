@@ -2,6 +2,7 @@
 
 
 import Foundation
+import MapKit
 
 class Model {
     
@@ -51,6 +52,10 @@ class Model {
         static func == (lhs: Game, rhs: Game) -> Bool {
             return lhs.gameID == rhs.gameID && lhs.userID == rhs.userID
         }
+    }
+    
+    class CustomMapItem: MKMapItem {
+        var gameID: Int?
     }
 
     

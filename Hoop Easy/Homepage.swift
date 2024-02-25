@@ -14,8 +14,8 @@ extension CLLocationCoordinate2D {
 
 struct Homepage: View {
     @State private var position: MapCameraPosition = .automatic
-    @State private var searchResults: [MKMapItem] = []
-    @State private var selectedResult: MKMapItem?
+    @State private var searchResults: [Model.CustomMapItem] = []
+    @State private var selectedResult: Model.CustomMapItem?
     @State private var availableGames: [Model.Game] = []
     
     let viewModel: ViewModel
@@ -42,7 +42,10 @@ struct Homepage: View {
                 }
             })
         }
-
+        .onChange(of: selectedResult) {
+            print(selectedResult ?? "None")
+            print(selectedResult?.gameID)
+        }
     }
 }
 

@@ -56,23 +56,23 @@ class ViewModel: ObservableObject {
         }
     }
     
-    func getAvailableGames(completion: @escaping ([Model.Game]?) -> Void, MapKitGamesEscape: @escaping ([MKMapItem]?) -> Void) {
+    func getAvailableGames(completion: @escaping ([Model.Game]?) -> Void, MapKitGamesEscape: @escaping ([Model.CustomMapItem]?) -> Void) {
         callAvailableGames(endpoint: "api/games", params: ["": ""]) { result in
             switch result {
             case .success(let games):
                 completion(games)
                 
                 // Create MKMapItems from game coordinates
-                let MKGames = games?.compactMap { game -> MKMapItem? in
+                let MKGames = games?.compactMap { game -> Model.CustomMapItem? in
                     guard let latitude = Double(game.latitude),
                           let longitude = Double(game.longitude) else {
                         return nil
                     }
                     let coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
                     let placemark = MKPlacemark(coordinate: coordinate)
-                    let mapItem = MKMapItem(placemark: placemark)
+                    let mapItem = Model.CustomMapItem(placemark: placemark)
                     mapItem.name = "\(game.gameType)v\(game.gameType) on \(game.dateOfGameInUTC.prefix(10))"
-                    
+                    mapItem.gameID = game.gameID
                     return mapItem
                 }
                 MapKitGamesEscape(MKGames)
