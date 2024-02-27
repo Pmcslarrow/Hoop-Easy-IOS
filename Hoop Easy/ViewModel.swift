@@ -11,6 +11,7 @@ class ViewModel: ObservableObject {
     @Published var availableGames: [Model.Game]?
     @Published var loggedIn = false
     @Published var loginAttempts = 0
+    @Published var mapClickedGame: Model.Game?
     
     func handleButtonClick(email: String, password: String) async {
         do {

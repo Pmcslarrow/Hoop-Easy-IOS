@@ -155,14 +155,12 @@ struct BackgroundImageView: ViewModifier {
             )
     }
 }
+
 extension View {
     func backgroundImage() -> some View {
         self.modifier(BackgroundImageView())
     }
 }
-
-
-
 
 #Preview {
     Extensions()

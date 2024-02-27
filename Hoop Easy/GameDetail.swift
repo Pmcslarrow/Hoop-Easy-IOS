@@ -9,10 +9,11 @@ import SwiftUI
 
 struct GameDetail: View {
     let viewModel: ViewModel
-    @State var isSheetActive = false
+    let game: Model.Game
     
-    init (viewModel: ViewModel) {
+    init (viewModel: ViewModel, game: Model.Game) {
         self.viewModel = viewModel
+        self.game = game
     }
     
     var body: some View {
@@ -27,28 +28,8 @@ struct GameDetail: View {
     }
 }
 
-
-struct FindGameDetail: View {
-    let viewModel: ViewModel
-    @State var isSheetActive = false
-    
-    init (viewModel: ViewModel) {
-        self.viewModel = viewModel
-    }
-    
-    var body: some View {
-        ZStack {
-            Image("background_2").withBackground() // Insert map ui
-            
-            VStack {
-                Text("FindGameDetail")
-            }
-        }
-    }
-}
-
-
+/*
 #Preview {
-    GameDetail(viewModel: ViewModel())
+    GameDetail(viewModel: ViewModel(), game: Model.Game)
 }
-
+*/

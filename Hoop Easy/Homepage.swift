@@ -13,17 +13,38 @@ extension CLLocationCoordinate2D {
 }
 
 struct Homepage: View {
-    @State private var position: MapCameraPosition = .automatic
-    @State private var searchResults: [Model.CustomMapItem] = []
-    @State private var selectedResult: Model.CustomMapItem?
-    @State private var availableGames: [Model.Game] = []
-    
     let viewModel: ViewModel
     
     init(viewModel: ViewModel) {
         self.viewModel = viewModel
     }
     
+    var body: some View {
+        ZStack {
+            MapView(viewModel: self.viewModel)
+            NearbyGamesList()
+                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomLeading)
+                .padding()
+        }
+   }
+}
+
+struct MapView: View {
+    let viewModel: ViewModel
+    @State private var position: MapCameraPosition = .automatic
+    @State private var searchResults: [Model.CustomMapItem] = []
+    @State private var selectedResult: Model.CustomMapItem?
+    @State private var availableGames: [Model.Game] = []
+    @State private var isMarkerClicked: Bool = false
+    
+    func handleMarkerClick() {
+        if let selectedGame = selectedResult,
+           let clickedGame = availableGames.first(where: { $0.gameID == selectedGame.gameID }) {
+            self.viewModel.mapClickedGame = clickedGame
+            self.isMarkerClicked = true
+        }
+    }
+
     var body: some View {
         Map(position: $position, selection: $selectedResult) {
             ForEach(self.searchResults, id: \.self) { game in
@@ -43,11 +64,38 @@ struct Homepage: View {
             })
         }
         .onChange(of: selectedResult) {
-            print(selectedResult ?? "None")
-            print(selectedResult?.gameID)
+            handleMarkerClick()
+        }
+        .sheet(isPresented: $isMarkerClicked) {
+            if let clickedGame = self.viewModel.mapClickedGame {
+                Text(clickedGame.address)
+                    .presentationDetents([.medium, .large])
+            }
+        }.ignoresSafeArea()
+    }
+}
+
+struct NearbyGamesList: View {
+    @State private var isActive: Bool = false
+    
+    var body: some View {
+        Button(
+            action: {
+                isActive.toggle()
+            },
+            label: {
+                Image(systemName: "list.bullet")
+                    .foregroundStyle(.black)
+                    .font(.system(size: 30))
+            }
+        ).sheet(isPresented: $isActive) {
+            ZStack {
+                Text("Show the list of nearby games like in the Figma")
+            }.presentationDetents([.large, .medium])
         }
     }
 }
+
 
 
 #Preview {

@@ -2,23 +2,19 @@
 //  Map.swift
 //  Hoop Easy
 //
-//  Created by Paul McSlarrow on 2/14/24.
+//  Created by Paul McSlarrow on 2/26/24.
 //
 
 import SwiftUI
 
 struct Map: View {
-    let viewModel: ViewModel
-    
-    init(viewModel: ViewModel) {
-        self.viewModel = viewModel
-    }
-    
     var body: some View {
-        Text("Map")
+        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
     }
 }
 
+/*
 #Preview {
-    Map(viewModel: ViewModel())
+    Map()
 }
+*/
