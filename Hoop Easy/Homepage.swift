@@ -22,7 +22,7 @@ struct Homepage: View {
     var body: some View {
         ZStack {
             MapView(viewModel: self.viewModel)
-            NearbyGamesList()
+            NearbyGamesList(viewModel: self.viewModel)
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomLeading)
                 .padding()
         }
@@ -55,6 +55,7 @@ struct MapView: View {
         .onAppear {
             self.viewModel.getAvailableGames(completion: { games in
                 if let games = games {
+                    self.viewModel.availableGames = games
                     self.availableGames = games
                 }
             }, MapKitGamesEscape: { mapItems in
@@ -76,8 +77,43 @@ struct MapView: View {
 }
 
 struct NearbyGamesList: View {
+    let viewModel: ViewModel
     @State private var isActive: Bool = false
     
+    struct ListItem: View {
+        let game: Model.Game
+        
+        var body: some View {
+            HStack {
+                Text("3.2 Mi")
+                    .font(.title)
+                    .foregroundStyle(.colorLightOrange)
+                    .fontWeight(.semibold)
+                
+                Spacer()
+                
+                VStack (alignment: .leading) {
+                    Text(game.address)
+                        .font(.system(size: 15))
+                        .fontWeight(.medium)
+                    
+                    if let (date, time) = utcToLocal(time: game.dateOfGameInUTC) {
+                        Text("\(date) \(time)")
+                            .font(.system(size: 15))
+                            .fontWeight(.medium)
+                            .foregroundColor(Color(red: 0.6, green: 0.6, blue: 0.6))
+                    }
+                }
+                
+                Spacer()
+                
+                Image(systemName: "arrow.right.circle")
+            }
+            .padding()
+        }
+    }
+
+
     var body: some View {
         Button(
             action: {
@@ -90,8 +126,13 @@ struct NearbyGamesList: View {
             }
         ).sheet(isPresented: $isActive) {
             ZStack {
-                Text("Show the list of nearby games like in the Figma")
-            }.presentationDetents([.large, .medium])
+                List {
+                    ForEach(self.viewModel.availableGames!) { game in
+                        ListItem(game: game)
+                    }
+                }.listStyle(.plain)
+            }
+            .presentationDetents([.medium, .large])
         }
     }
 }

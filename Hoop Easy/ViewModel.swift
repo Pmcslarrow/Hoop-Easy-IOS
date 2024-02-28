@@ -79,24 +79,9 @@ class ViewModel: ObservableObject {
                 MapKitGamesEscape(MKGames)
                 
             case .failure(let error):
-                print("Error fetching games: \(error)")
+                print("Error fetching games in getAvailableGames(): \(error)")
                 completion(nil)
                 MapKitGamesEscape(nil)
-            }
-        }
-    }
-
-
-   
-    func callCurrentUser(endpoint: String, params: [String: String], completion: @escaping (Result<Model.User?, Error>) -> Void) {
-        let api = "https://hoop-easy-production.up.railway.app/" + endpoint
-
-        AF.request(api, parameters: params).responseDecodable(of: Model.User.self) { response in
-            switch response.result {
-            case .success(let user):
-                completion(.success(user))
-            case .failure(let error):
-                completion(.failure(error))
             }
         }
     }
@@ -113,6 +98,21 @@ class ViewModel: ObservableObject {
             }
         }
     }
+   
+    func callCurrentUser(endpoint: String, params: [String: String], completion: @escaping (Result<Model.User?, Error>) -> Void) {
+        let api = "https://hoop-easy-production.up.railway.app/" + endpoint
+
+        AF.request(api, parameters: params).responseDecodable(of: Model.User.self) { response in
+            switch response.result {
+            case .success(let user):
+                completion(.success(user))
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
+    }
+    
+
 
 
 

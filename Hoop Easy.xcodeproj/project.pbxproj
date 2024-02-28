@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3F01B9612B8E647D0024F534 /* DateFormatting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F01B9602B8E647D0024F534 /* DateFormatting.swift */; };
 		3F53EC2F2B7C01A3004DDD54 /* Hoop_EasyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F53EC2E2B7C01A3004DDD54 /* Hoop_EasyApp.swift */; };
 		3F53EC312B7C01A3004DDD54 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F53EC302B7C01A3004DDD54 /* ContentView.swift */; };
 		3F53EC332B7C01A4004DDD54 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3F53EC322B7C01A4004DDD54 /* Assets.xcassets */; };
@@ -31,6 +32,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3F01B9602B8E647D0024F534 /* DateFormatting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatting.swift; sourceTree = "<group>"; };
 		3F53EC2B2B7C01A3004DDD54 /* Hoop Easy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Hoop Easy.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3F53EC2E2B7C01A3004DDD54 /* Hoop_EasyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hoop_EasyApp.swift; sourceTree = "<group>"; };
 		3F53EC302B7C01A3004DDD54 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -98,6 +100,7 @@
 				3F53EC5F2B7D47DB004DDD54 /* Profile.swift */,
 				3F53EC532B7C227D004DDD54 /* Extensions.swift */,
 				3F53EC672B7F412E004DDD54 /* GameDetail.swift */,
+				3F01B9602B8E647D0024F534 /* DateFormatting.swift */,
 			);
 			path = "Hoop Easy";
 			sourceTree = "<group>";
@@ -206,6 +209,7 @@
 			files = (
 				3F53EC312B7C01A3004DDD54 /* ContentView.swift in Sources */,
 				3F53EC602B7D47DB004DDD54 /* Profile.swift in Sources */,
+				3F01B9612B8E647D0024F534 /* DateFormatting.swift in Sources */,
 				3F53EC4C2B7C0A62004DDD54 /* ViewModel.swift in Sources */,
 				3F53EC2F2B7C01A3004DDD54 /* Hoop_EasyApp.swift in Sources */,
 				3F53EC642B7D47EF004DDD54 /* Rankings.swift in Sources */,

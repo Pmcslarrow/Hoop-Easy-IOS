@@ -23,7 +23,8 @@ class Model {
         let profilePic: String
     }
     
-    struct Game: Decodable, Hashable {
+    struct Game: Decodable, Hashable, Identifiable {
+        let id = UUID()
         let gameID: Int
         let userID: Int
         let address: String
@@ -43,7 +44,29 @@ class Model {
         let team2: [String: String]?
         let teamOneApproval: Int?
         let teamTwoApproval: Int?
-        
+
+        init(gameID: Int, userID: Int, address: String, longitude: String, latitude: String, dateOfGameInUTC: String, distance: String?, gameType: Int, playerCreatedID: String, timeOfGame: String, userTimeZone: String, status: String, teammates: [String: String], captains: [String: String]?, scores: [String: String]?, team1: [String: String]?, team2: [String: String]?, teamOneApproval: Int?, teamTwoApproval: Int?) {
+            self.gameID = gameID
+            self.userID = userID
+            self.address = address
+            self.longitude = longitude
+            self.latitude = latitude
+            self.dateOfGameInUTC = dateOfGameInUTC
+            self.distance = distance
+            self.gameType = gameType
+            self.playerCreatedID = playerCreatedID
+            self.timeOfGame = timeOfGame
+            self.userTimeZone = userTimeZone
+            self.status = status
+            self.teammates = teammates
+            self.captains = captains
+            self.scores = scores
+            self.team1 = team1
+            self.team2 = team2
+            self.teamOneApproval = teamOneApproval
+            self.teamTwoApproval = teamTwoApproval
+        }
+
         func hash(into hasher: inout Hasher) {
             hasher.combine(gameID)
             hasher.combine(userID)
