@@ -4,6 +4,7 @@ import Foundation
 import FirebaseAuth
 import Alamofire
 import MapKit
+import _MapKit_SwiftUI
 
 class ViewModel: ObservableObject {
     private var model = Model()
@@ -12,6 +13,11 @@ class ViewModel: ObservableObject {
     @Published var loggedIn = false
     @Published var loginAttempts = 0
     @Published var mapClickedGame: Model.Game?
+    @Published var searchResults: [Model.CustomMapItem] = []
+    @Published var selectedResult: Model.CustomMapItem?
+    @Published var position: MapCameraPosition = .automatic
+    @Published var isMarkerClicked: Bool = false
+
     
     func handleButtonClick(email: String, password: String) async {
         do {
@@ -112,10 +118,13 @@ class ViewModel: ObservableObject {
         }
     }
     
-
-
-
-
+    func handleMarkerClick() {
+        if let selectedGame = self.selectedResult,
+           let clickedGame = self.availableGames!.first(where: { $0.gameID == selectedGame.gameID }) {
+            self.mapClickedGame = clickedGame
+            self.isMarkerClicked.toggle()
+        }
+    }
 }
 
 
